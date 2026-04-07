@@ -6,7 +6,12 @@ const {Server} = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+        origin: "*", // or your Vercel URL later
+        methods: ["GET", "POST"]
+    }
+});
 
 
 io.on("connection",(socket)=>{
@@ -49,6 +54,6 @@ app.get('/',(req,res)=>{
     res.sendFile(path.resolve("./public/index.html"));
 });
 
-server.listen(9000,()=>{
-    console.log("Server running at port : 9000");
+server.listen(process.env.PORT || 9000,()=>{
+    console.log(`Server running at port : ${process.env.PORT || 9000}`);
 });
