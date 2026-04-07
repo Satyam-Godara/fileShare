@@ -24,7 +24,15 @@ io.on("connection",(socket)=>{
         if(socket.name){
             io.emit('exit',socket.name);
         }
-    })
+    });
+
+    socket.on("upload-file",(data)=>{
+        socket.broadcast.emit('recieve-file',{
+            file:data.file,
+            fileName:data.fileName,
+            fileType:data.fileType
+        });
+    });
     
 });
 // io.on("disconnect",()=>{

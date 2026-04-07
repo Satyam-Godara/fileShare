@@ -61,7 +61,7 @@
             max-height: 70vh;
         }
         p{
-            background-color: #d5ecfa;
+            background-color: #56beff;
             padding: 10px 10px;
             margin: 5px 0;
             border-radius: 10px;
@@ -80,14 +80,16 @@
         }
         .myMsg{
             align-self: flex-end;
-            background-color: rgb(9, 206, 232);
+            background-color: rgb(7, 46, 54);
             text-align: right;
             right: 0;
+            color: white;
         }
         .otherMsg{
             align-self: flex-start;
-            background-color: rgb(188, 242, 250);
+            background-color: rgb(72, 97, 102);
             text-align: left;
+            color: white;
         }
         .btnContainer{
             bottom: 0;
@@ -111,17 +113,19 @@
     </div>
     <div class="btnContainer">
         <input type="text" id="message" placeholder="Enter message">
+        <input type="file" id="file" placeholder="Choose file to send">
         <button type="button" id="sendBtn">Send</button>
     </div>
     
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        let user = prompt("Enter username");
+        let user = prompt("Enter username") || "Anonymous";
         const socket = io();
         const sendBtn = document.getElementById('sendBtn');
         const usernameInput = user;
         const messageInput = document.getElementById('message');
         const messageContainer = document.getElementById('messages');
+        const fileInput = document.getElementById('file');
 
         console.log(user);
         console.log(usernameInput);
@@ -134,14 +138,16 @@
             p.innerText=`---------- ${username} : entered the chatroom -----------`;
             p.classList.add('pCenter');
             messageContainer.appendChild(p);
+            messageContainer.scrollTop = messageContainer.scrollHeight;
         });
 
         socket.on("exit",(username)=>{
             const p = document.createElement("p");
             // p.innerText=`---------- ${data.username} : left the chatroom -----------`;
-            p.innerText=`---------- :${username} left the chatroom -----------`;
+            p.innerText=`---------- ${username} : left the chatroom -----------`;
             p.classList.add('pCenter');
             messageContainer.appendChild(p);
+            messageContainer.scrollTop = messageContainer.scrollHeight;
         })
 
 
@@ -152,10 +158,11 @@
                 p.classList.add("myMsg");
             }
             else{
-                p.innerText = `${data.username || "Anonymous"} : ${data.message}`;
+                p.innerText = `${data.username} : ${data.message}`;
                 p.classList.add("otherMsg");
             }
             messageContainer.appendChild(p);
+            messageContainer.scrollTop = messageContainer.scrollHeight;
         });
 
         sendBtn.addEventListener("click",()=>{
@@ -171,6 +178,50 @@
             }
         });
         
+        function send(){
+            const username = usernameInput;
+            const message = messageInput.value.trim();
+
+            if(username && message){
+                socket.emit("user-message" , {username,message});
+                messageInput.value="";
+            }
+            else{
+                alert("Both user Name and message are required!!")
+            }
+        }
+        // call send function on press of enter;
+        messageInput.addEventListener("keydown", (event)=>{
+            if(event.key==="Enter"){
+                send();
+            }
+        });
+
+
+        //file upload and recieve;
+        fileInput.addEventListener('change',()=>{
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            reader.onload = ()=>{
+                socket.emit('upload-file',{
+                    file:reader.result,
+                    fileName:file.name,
+                    fileType:file.type
+                });
+            };
+            reader.readAsArrayBuffer(file);
+        }); 
+
+        socket.on('recieve-file',(data)=>{
+            const blob = new Blob([data.file],{type:data.fileType});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download=data.fileName;
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+
     </script>
 </body>
 </html>
