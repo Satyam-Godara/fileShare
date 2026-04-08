@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assignment2</title>
     <style>
+        ::-webkit-scrollbar{
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track{
+            background: #2d3439;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb{
+            background: #13a3ce;
+            border-radius: 10px;
+        }
         body{   
             font-family: Arial, sans-serif;
             background-color: black;
@@ -20,7 +31,7 @@
             position:sticky;
             
         }
-        input{
+        #message{
             width: 1400px;
             height: 30px;
             padding: 8px;
@@ -46,7 +57,30 @@
             border-radius: 4px;
             outline: none;
         }
-        
+        #file{
+            padding: 0px;
+            margin: 0;
+            width: fit-content;
+            font-size: large;
+            background-color: rgb(249, 86, 86);
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            border: none;
+            /* box-shadow: 2px 2px 2px rgb(105, 105, 105); */
+            border-radius: 5px;
+            outline: none;
+        }
+        input[type="file"]::file-selector-button {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
         #sendBtn:active{
             background-color: rgb(140, 9, 9);
             box-shadow: none;
@@ -58,7 +92,9 @@
         #messages{
             overflow-y: auto;
             padding: 10px;
-            max-height: 70vh;
+            max-height: 72  vh;
+            display: flex;
+            flex-direction: column;
         }
         p{
             background-color: #56beff;
@@ -101,6 +137,9 @@
         .pCenter{
             text-align: center;
         }
+        .newMsg{
+            width: fit-content;
+        }
     </style>
 
 </head>
@@ -108,12 +147,12 @@
     <h1>ChatRoom</h1>
     <!-- <input type="text" id="username" placeholder="Enter username"> -->
     <div class="container">
+        <input type="file" id="file" placeholder="Choose file to send">
         <!-- <h3 id="userName">You are: </h3> -->
         <div id="messages"></div>
     </div>
     <div class="btnContainer">
         <input type="text" id="message" placeholder="Enter message">
-        <input type="file" id="file" placeholder="Choose file to send">
         <button type="button" id="sendBtn">Send</button>
     </div>
     
@@ -122,6 +161,7 @@
     <script>
         let user = prompt("Enter username") || "Anonymous";
         const socket = io("https://fileshare-1gsp.onrender.com" );
+        // const socket = io();
         const sendBtn = document.getElementById('sendBtn');
         const usernameInput = user;
         const messageInput = document.getElementById('message');
@@ -157,10 +197,12 @@
             if(data.username===username){
                 p.innerText=`You : ${data.message}`;
                 p.classList.add("myMsg");
+                p.classList.add("newMsg");
             }
             else{
                 p.innerText = `${data.username} : ${data.message}`;
                 p.classList.add("otherMsg");
+                p.classList.add("newMsg");
             }
             messageContainer.appendChild(p);
             messageContainer.scrollTop = messageContainer.scrollHeight;
