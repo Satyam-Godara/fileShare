@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assignment2</title>
-    <style>
+    <!-- <style>
         ::-webkit-scrollbar{
             width: 10px;
         }
@@ -152,6 +152,216 @@
         a{
             color: white;
             text-decoration: underline;
+        }
+    </style> -->
+    <style>
+        ::-webkit-scrollbar{
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track{
+            background: #2d3439;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb{
+            background: #13a3ce;
+            border-radius: 10px;
+        }
+
+        body{   
+            font-family: Arial, sans-serif;
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* HEADER */
+        h1{
+            color: aqua;
+            padding: 10px;
+            margin:0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            background: black;
+            z-index: 10;
+        }
+
+        /* TOP BAR */
+        .topBar{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* FILE INPUT */
+        #file{
+            font-size: 14px;
+            padding: 0px;
+            /* margin-right: 10px; */
+            width: fit-content;
+            height: fit-content;
+            font-size: large;
+            background-color: rgb(249, 86, 86);
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            border: none;
+            /* box-shadow: 2px 2px 2px rgb(105, 105, 105); */
+            border-radius: 5px;
+            outline: none;
+            /* height: 30px; */
+            /* width: 140px; */
+        }
+
+        input[type="file"]::file-selector-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* USERNAME */
+        h3{
+            color: white;
+            font-size: 16px;
+        }
+
+        /* CHAT CONTAINER */
+        .container{
+            padding: 10px;
+        }
+
+        #messages{
+            overflow-y: auto;
+            height: calc(100vh - 200px);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        /* MESSAGES */
+        p{
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 75%;
+            word-wrap: break-word;
+            background-color: #56beff;
+        }
+
+        .myMsg{
+            align-self: flex-end;
+            background-color: rgb(7, 46, 54);
+            color: white;
+        }
+
+        .otherMsg{
+            align-self: flex-start;
+            background-color: rgb(72, 97, 102);
+            color: white;
+        }
+
+        .pCenter{
+            text-align: center;
+            align-self: center;
+        }
+
+        /* INPUT BAR */
+        .btnContainer{
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background: black;
+            box-sizing: border-box;
+        }
+
+        /* MESSAGE INPUT */
+        #message{
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+
+        /* SEND BUTTON */
+        #sendBtn{
+            padding: 10px 15px;
+            background-color: rgb(249, 86, 86);
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #sendBtn:active{
+            background-color: rgb(140, 9, 9);
+        }
+
+        /* LINKS */
+        a{
+            color: lightblue;
+        }
+
+        /* 📱 MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+
+            h1{
+                font-size: 20px;
+            }
+
+            h3{
+                font-size: 14px;
+            }
+
+            #messages{
+                height: calc(100vh - 230px);
+            }
+
+            p{
+                max-width: 90%;
+                font-size: 14px;
+            }
+
+            #sendBtn{
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            #message{
+                font-size: 14px;
+            }
+        }
+
+        /* 📱 SMALL DEVICES */
+        @media (max-width: 480px){
+
+            .topBar{
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            #messages{
+                height: calc(100vh - 260px);
+            }
+
+            .btnContainer{
+                flex-direction: column;
+            }
+
+            #sendBtn{
+                width: 100%;
+            }
         }
     </style>
 
