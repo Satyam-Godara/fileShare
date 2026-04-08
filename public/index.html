@@ -149,6 +149,10 @@
             justify-content: space-between;
             margin: 0px 20px 0px 20px;
         }
+        a{
+            color: white;
+            text-decoration: underline;
+        }
     </style>
 
 </head>
@@ -267,6 +271,7 @@
                 });
             };
             reader.readAsArrayBuffer(file);
+            alert("file sent");
         }); 
 
         socket.on('recieve-file',(data)=>{
@@ -275,8 +280,24 @@
             const a = document.createElement('a');
             a.href = url;
             a.download=data.fileName;
-            a.click();
-            URL.revokeObjectURL(url);
+            // a.click();
+            a.textContent=data.fileName;
+
+
+            const p = document.createElement("p");   
+            p.textContent="click the file name to download file, it will be available for 10 sec. only : " ;
+            p.appendChild(a);
+            p.classList.add("otherMsg");
+            p.classList.add("newMsg");
+            messageContainer.appendChild(p);
+            
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+            setTimeout(() => {
+                alert(`${data.fileName} is no longer available to download.`);
+                URL.revokeObjectURL(url);
+            }, 10000);
+            
+            // URL.revokeObjectURL(url);
         });
 
     </script>
