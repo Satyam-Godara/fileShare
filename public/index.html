@@ -61,6 +61,7 @@
             padding: 0px;
             margin: 0;
             width: fit-content;
+            height: fit-content;
             font-size: large;
             background-color: rgb(249, 86, 86);
             color: white;
@@ -140,15 +141,24 @@
         .newMsg{
             width: fit-content;
         }
+        h3{
+            color: white;
+        }
+        .topBar{
+            display: flex;
+            justify-content: space-between;
+            margin: 0px 20px 0px 20px;
+        }
     </style>
 
 </head>
 <body>
     <h1>ChatRoom</h1>
-    <!-- <input type="text" id="username" placeholder="Enter username"> -->
+    <div class="topBar">
+        <input type="file" id="file">
+        <h3  id="username">Username :  </h3>
+    </div>
     <div class="container">
-        <input type="file" id="file" placeholder="Choose file to send">
-        <!-- <h3 id="userName">You are: </h3> -->
         <div id="messages"></div>
     </div>
     <div class="btnContainer">
@@ -167,12 +177,16 @@
         const messageInput = document.getElementById('message');
         const messageContainer = document.getElementById('messages');
         const fileInput = document.getElementById('file');
-
+        const uname = document.getElementById('username');
+        
+        
         console.log(user);
         console.log(usernameInput);
         const username = usernameInput;
         console.log(username);
         if(username){socket.emit("userEntered",username)};
+
+        uname.innerText+=` ${usernameInput}`;
 
         socket.on('userEntered',(username)=>{
             const p = document.createElement("p");
