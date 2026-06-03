@@ -50,8 +50,11 @@ io.on("connection",(socket)=>{
 
 app.use(express.static(path.resolve("./public")));
 
-app.get('/health',(req,res)=>{
-    // res.sendFile(path.resolve("./public/index.html"));
+app.get('/',(req,res)=>{
+    res.sendFile(path.resolve("./public/index.html"));
+});
+
+app.get('/health',(req,res)=>{ 
     res.send("File share api running");
 });
 
