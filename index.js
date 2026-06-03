@@ -54,9 +54,9 @@ app.get('/',(req,res)=>{
     res.sendFile(path.resolve("./public/index.html"));
 });
 
-app.get('/health',(req,res)=>{ 
-    res.send("File share api running");
-});
+// app.get('/health',(req,res)=>{ 
+//     res.send("File share api running");
+// });
 
 server.listen(process.env.PORT || 9000,()=>{
     console.log(`Server running at port : ${process.env.PORT || 9000}`);
